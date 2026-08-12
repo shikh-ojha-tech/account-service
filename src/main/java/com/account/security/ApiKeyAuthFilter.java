@@ -22,6 +22,9 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     private final String expectedApiKey;
 
     public ApiKeyAuthFilter(@Value("${app.security.api-key}") String expectedApiKey) {
+        if (!StringUtils.hasText(expectedApiKey)) {
+            throw new IllegalStateException("app.security.api-key / API_KEY must be set");
+        }
         this.expectedApiKey = expectedApiKey;
     }
 

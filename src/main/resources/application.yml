@@ -32,3 +32,5 @@ app:
   outbox:
     poll-interval-ms: 250
     batch-size: 50
+  security:
+    api-key: ${API_KEY:demo-api-key}
