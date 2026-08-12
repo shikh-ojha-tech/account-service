@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.account.persistence.AccountMapper">
+
+    <resultMap id="AccountResultMap" type="com.account.domain.Account">
+        <id property="accountId" column="account_id" javaType="java.util.UUID"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="country" column="country"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO account (account_id, customer_id, country)
+        VALUES (#{accountId, javaType=java.util.UUID}, #{customerId}, #{country})
+    </insert>
+
+    <select id="findById" resultMap="AccountResultMap">
+        SELECT account_id, customer_id, country
+        FROM account
+        WHERE account_id = #{accountId, javaType=java.util.UUID}
+    </select>
+
+</mapper>

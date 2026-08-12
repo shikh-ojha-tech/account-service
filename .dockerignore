@@ -1,0 +1,10 @@
+# Keep build context small and avoid leaking local caches into the image.
+.gradle
+build
+out
+.idea
+.vscode
+.git
+*.iml
+*.log
+hs_err_pid*

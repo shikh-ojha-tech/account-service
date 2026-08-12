@@ -1,0 +1,42 @@
+{
+  "name": "Account Service",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+  "forwardPorts": [8080, 15672],
+  "portsAttributes": {
+    "8080": {
+      "label": "Account API + Swagger UI",
+      "onAutoForward": "notify"
+    },
+    "15672": {
+      "label": "RabbitMQ Management",
+      "onAutoForward": "silent"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "README.md",
+        "docs/DESIGN.md"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "32gb"
+  }
+}

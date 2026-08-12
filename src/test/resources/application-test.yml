@@ -1,0 +1,22 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  flyway:
+    enabled: true
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.account.domain
+
+app:
+  outbox:
+    poll-interval-ms: 100
+    batch-size: 50
+  security:
+    api-key: test-api-key

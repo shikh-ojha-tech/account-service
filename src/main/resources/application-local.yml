@@ -1,0 +1,10 @@
+# Local profile (default when no SPRING_PROFILES_ACTIVE is set).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/account_db
+    username: account
+    password: account
+
+app:
+  security:
+    api-key: ${API_KEY:demo-api-key}

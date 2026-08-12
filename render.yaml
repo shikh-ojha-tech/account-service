@@ -1,0 +1,50 @@
+databases:
+  - name: account-postgres
+    plan: basic-256mb
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: account-service
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /v3/api-docs
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: docker
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: account-postgres
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: account-postgres
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: account-postgres
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: account-postgres
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: account-postgres
+          property: database
+      - key: SPRING_RABBITMQ_HOST
+        sync: false
+      - key: SPRING_RABBITMQ_PORT
+        value: "5671"
+      - key: SPRING_RABBITMQ_USERNAME
+        sync: false
+      - key: SPRING_RABBITMQ_PASSWORD
+        sync: false
+      - key: SPRING_RABBITMQ_VIRTUAL_HOST
+        sync: false
+      - key: SPRING_RABBITMQ_SSL_ENABLED
+        value: "true"
+      - key: API_KEY
+        generateValue: true
