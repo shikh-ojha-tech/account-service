@@ -67,9 +67,4 @@ Stateless app behind a load balancer, shared Postgres. Outbox poller uses `FOR U
 
 ## Smoke check
 
-1. Start the stack
-2. Open Swagger
-3. Create account (EUR + USD)
-4. IN then OUT
-5. Oversized OUT -> `INSUFFICIENT_FUNDS`
-6. List transactions
+Same flow as README **Try it**: create account → IN → OUT → overspend rejected → list history.
