@@ -1,4 +1,4 @@
-package com.account.service;
+package com.account.model;
 
 import com.account.domain.Account;
 import com.account.domain.Balance;

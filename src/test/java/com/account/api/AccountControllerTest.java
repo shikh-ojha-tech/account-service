@@ -6,7 +6,7 @@ import com.account.domain.Balance;
 import com.account.domain.Currency;
 import com.account.exception.DomainException;
 import com.account.exception.ErrorCodes;
-import com.account.service.AccountDetails;
+import com.account.model.AccountDetails;
 import com.account.service.AccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

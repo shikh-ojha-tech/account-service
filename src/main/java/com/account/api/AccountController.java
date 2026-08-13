@@ -4,9 +4,10 @@ import com.account.api.dto.AccountResponse;
 import com.account.api.dto.BalanceDto;
 import com.account.api.dto.CreateAccountRequest;
 import com.account.domain.Balance;
-import com.account.service.AccountDetails;
+import com.account.model.AccountDetails;
 import com.account.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -60,7 +61,8 @@ public class AccountController {
             @ApiResponse(responseCode = "404", description = "Not found")
     })
     @GetMapping("/{accountId}")
-    public AccountResponse getAccount(@PathVariable UUID accountId) {
+    public AccountResponse getAccount(
+            @Parameter(description = "Account to load") @PathVariable UUID accountId) {
         return toResponse(accountService.getAccount(accountId));
     }
 

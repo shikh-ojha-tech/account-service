@@ -1,42 +1,33 @@
 package com.account.api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Schema(description = "Book money in or out on an account")
-public class CreateTransactionRequest {
+@Schema(description = "Transaction after it was booked")
+public class CreateTransactionResponse {
 
-    @NotNull
-    @Schema(description = "Account to update")
+    @Schema(description = "Account that was updated")
     private UUID accountId;
 
-    @NotNull
-    @DecimalMin(value = "0.01")
-    @Digits(integer = 17, fraction = 2)
-    @Schema(description = "Positive amount, max 2 decimal places", example = "10.50")
+    @Schema(description = "New transaction id")
+    private UUID transactionId;
+
+    @Schema(description = "Money moved", example = "10.00")
     private BigDecimal amount;
 
-    @NotBlank
-    @Size(max = 3)
-    @Schema(description = "Currency already open on the account", example = "EUR")
+    @Schema(description = "Currency of the move", example = "EUR")
     private String currency;
 
-    @NotBlank
-    @Size(max = 3)
     @Schema(description = "IN adds money, OUT takes money out", example = "IN")
     private String direction;
 
-    @NotBlank
-    @Size(max = 255)
     @Schema(description = "Short note about the move", example = "Deposit")
     private String description;
+
+    @Schema(description = "Balance in that currency after this move", example = "10.00")
+    private BigDecimal balanceAfterTransaction;
 
     public UUID getAccountId() {
         return accountId;
@@ -44,6 +35,14 @@ public class CreateTransactionRequest {
 
     public void setAccountId(UUID accountId) {
         this.accountId = accountId;
+    }
+
+    public UUID getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(UUID transactionId) {
+        this.transactionId = transactionId;
     }
 
     public BigDecimal getAmount() {
@@ -76,5 +75,13 @@ public class CreateTransactionRequest {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BigDecimal getBalanceAfterTransaction() {
+        return balanceAfterTransaction;
+    }
+
+    public void setBalanceAfterTransaction(BigDecimal balanceAfterTransaction) {
+        this.balanceAfterTransaction = balanceAfterTransaction;
     }
 }

@@ -7,6 +7,7 @@ import com.account.exception.DomainException;
 import com.account.exception.ErrorCodes;
 import com.account.messaging.AccountEvent;
 import com.account.messaging.AccountEventPublisher;
+import com.account.model.AccountDetails;
 import com.account.persistence.AccountMapper;
 import com.account.persistence.BalanceMapper;
 import org.junit.jupiter.api.DisplayName;

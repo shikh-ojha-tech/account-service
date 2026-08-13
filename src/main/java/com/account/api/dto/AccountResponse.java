@@ -1,14 +1,20 @@
 package com.account.api.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
 import java.util.UUID;
 
+@Schema(description = "Account with its currency balances")
 public class AccountResponse {
 
+    @Schema(description = "Account id")
     private UUID accountId;
 
+    @Schema(description = "Customer who owns the account", example = "cust-1")
     private String customerId;
 
+    @Schema(description = "Money available per currency")
     private List<BalanceDto> balances;
 
     public AccountResponse() {

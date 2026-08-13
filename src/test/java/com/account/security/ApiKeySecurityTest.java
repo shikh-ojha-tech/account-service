@@ -5,7 +5,7 @@ import com.account.api.error.ApiExceptionHandler;
 import com.account.config.SecurityConfig;
 import com.account.domain.Account;
 import com.account.exception.ErrorCodes;
-import com.account.service.AccountDetails;
+import com.account.model.AccountDetails;
 import com.account.service.AccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,24 +1,30 @@
 package com.account.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "One row from transaction history")
 public class TransactionResponse {
 
+    @Schema(description = "Account id")
     private UUID accountId;
+
+    @Schema(description = "Transaction id")
     private UUID transactionId;
+
+    @Schema(description = "Money moved", example = "10.00")
     private BigDecimal amount;
+
+    @Schema(description = "Currency of the move", example = "EUR")
     private String currency;
+
+    @Schema(description = "IN or OUT", example = "OUT")
     private String direction;
+
+    @Schema(description = "Short note about the move", example = "Spend")
     private String description;
-
-    private BigDecimal balanceAfterTransaction;
-
-    public TransactionResponse() {
-    }
 
     public UUID getAccountId() {
         return accountId;
@@ -66,13 +72,5 @@ public class TransactionResponse {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public BigDecimal getBalanceAfterTransaction() {
-        return balanceAfterTransaction;
-    }
-
-    public void setBalanceAfterTransaction(BigDecimal balanceAfterTransaction) {
-        this.balanceAfterTransaction = balanceAfterTransaction;
     }
 }

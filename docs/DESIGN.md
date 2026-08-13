@@ -18,7 +18,7 @@ Multi-currency account API with:
 - Postgres: data
 - RabbitMQ: events (`account.exchange` / `account.changes`)
 
-Packages: `api`, `service`, `persistence`, `messaging`, `domain`
+Packages: `api`, `service`, `persistence`, `messaging`, `domain`, `model`
 
 ## Data
 

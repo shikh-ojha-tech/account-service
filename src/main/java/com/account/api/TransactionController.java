@@ -1,10 +1,12 @@
 package com.account.api;
 
 import com.account.api.dto.CreateTransactionRequest;
+import com.account.api.dto.CreateTransactionResponse;
 import com.account.api.dto.TransactionResponse;
 import com.account.domain.Transaction;
 import com.account.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,13 +38,13 @@ public class TransactionController {
     @Operation(summary = "Create transaction")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Created",
-                    content = @Content(schema = @Schema(implementation = TransactionResponse.class))),
+                    content = @Content(schema = @Schema(implementation = CreateTransactionResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "404", description = "Not found")
     })
     @PostMapping("/transactions")
     @ResponseStatus(HttpStatus.CREATED)
-    public TransactionResponse createTransaction(@Valid @RequestBody CreateTransactionRequest request) {
+    public CreateTransactionResponse createTransaction(@Valid @RequestBody CreateTransactionRequest request) {
         Transaction transaction = transactionService.createTransaction(
                 request.getAccountId(),
                 request.getAmount(),
@@ -50,7 +52,7 @@ public class TransactionController {
                 request.getDirection(),
                 request.getDescription()
         );
-        return toResponse(transaction, true);
+        return toCreateResponse(transaction);
     }
 
     @Operation(summary = "List transactions")
@@ -60,13 +62,26 @@ public class TransactionController {
             @ApiResponse(responseCode = "404", description = "Not found")
     })
     @GetMapping("/accounts/{accountId}/transactions")
-    public List<TransactionResponse> getTransactions(@PathVariable UUID accountId) {
+    public List<TransactionResponse> getTransactions(
+            @Parameter(description = "Account to list history for") @PathVariable UUID accountId) {
         return transactionService.getTransactions(accountId).stream()
-                .map(transaction -> toResponse(transaction, false))
+                .map(TransactionController::toHistoryResponse)
                 .toList();
     }
 
-    private static TransactionResponse toResponse(Transaction transaction, boolean includeBalanceAfter) {
+    private static CreateTransactionResponse toCreateResponse(Transaction transaction) {
+        CreateTransactionResponse response = new CreateTransactionResponse();
+        response.setAccountId(transaction.getAccountId());
+        response.setTransactionId(transaction.getTransactionId());
+        response.setAmount(transaction.getAmount());
+        response.setCurrency(transaction.getCurrency().name());
+        response.setDirection(transaction.getDirection().name());
+        response.setDescription(transaction.getDescription());
+        response.setBalanceAfterTransaction(transaction.getBalanceAfterTransaction());
+        return response;
+    }
+
+    private static TransactionResponse toHistoryResponse(Transaction transaction) {
         TransactionResponse response = new TransactionResponse();
         response.setAccountId(transaction.getAccountId());
         response.setTransactionId(transaction.getTransactionId());
@@ -74,9 +89,6 @@ public class TransactionController {
         response.setCurrency(transaction.getCurrency().name());
         response.setDirection(transaction.getDirection().name());
         response.setDescription(transaction.getDescription());
-        if (includeBalanceAfter) {
-            response.setBalanceAfterTransaction(transaction.getBalanceAfterTransaction());
-        }
         return response;
     }
 }
